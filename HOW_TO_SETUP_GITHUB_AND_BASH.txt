@@ -1,0 +1,77 @@
+1. My GitHub Account is:
+username: sgabay
+password: Git72Git@@
+
+2. On the profile's SSH entry, I included this public key (from a file named: "C:\Sagi\Putty-SSH-Certs\SagiGabay_PublicKey.txt" on this machine)
+Here is the public key text that's included on the github account in case I need it later again. If so, just copy this text and paste:
+
+ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjxf03DdCCqaq9lR/B/+UWZle1ulB1ebIBANjmmO+84CotfQGq6bBwCuW3xTrkaxFp42JAXohxo3EqwgP0ka2ZAFG1F8+ijU1fKin/Ta5YbV6gfWkA68BQHRvNA1MA1CJlxyjq0hRhuPbVDN/s85g7Fcoj08ReCTRVUmNaiTtVRJyOS0bI8P7/r2AJHfiSV+/izhK96aKdwX70q9z8nmjPiotox80FoLIJEMxEr4mjWfJfY0850/QRf5m+Y0btBFcRFE0ij2IL4W3qy8iMIZ6uSY2l11L8lA+R3dbszyBnM6wJVe1m+dtoNOHEUBt1n7dC5thrU4M7qoBNh2l8GR7WQ== SagiGabay
+
+3. Upon authentication a private ssh key needs to be handshaked with the public on the github account. 
+This private key is mentioned in the git Config file. That file is located at:
+
+C:\Users\sagi_gabay\.ssh\config 
+
+Its text shows the following. You can see I have two "Host" entries, one for personal repos, one for Broadcom's repos. Each Host points to a private ssh key
+Since I have one public ssh key deployed on the github account then it's the same private key. If I'll include other ssh public keys on my account then I can/should
+use different private matching private keys. You can see the "IdentityFile" is pointing to the location of the private key. 
+It reads: "~/.ssh/SagiGabay_privateKey.pem" Which means this location: "C:\Users\sagi_gabay\.ssh\SagiGabay_privateKey.pem"
+
+Host github-broadcom
+    HostName github.com
+    IdentityFile ~/.ssh/SagiGabay_privateKey.pem
+
+Host github-personal
+    HostName github.com
+    IdentityFile ~/.ssh/SagiGabay_privateKey.pem
+
+IMPORTANT:
+The private key uses a Passphrase. This Passphrase is: "Password01"
+I do need to use it when cloning repos etc..
+
+4. My git bash client is using the Windows "sagi_gabay" user. The resolutoin to use the "sgabay" github username is located at:
+C:\Users\sagi_gabay\.gitconfig 
+
+This file has this data where you see it will use the 'sgabay' github username
+
+[user]
+	name = sgabay
+	email = sagi_gabay@yahoo.com
+[credential]
+	helper = manager-core
+
+5. On my local drive I created a C:\Sagi\git folder. I split it into:
+
+- Personal
+- Organziations
+  -- RallyTechServices
+  -- RallySoftware
+  
+All my personal repos are under 'Personal'. All Organization repos are in their matching respective organization locations.
+
+6. To create a repo:
+go to github and create a repo in the proper place, usually it would be personal. It would be created with a 'main' default branch.
+Then copy the 'SSH' clone command from the github page. Entering it in git bash needs to replace the Host (from mentioned in #3 above).
+
+Here is an example. If wanted to create a 'Sagi_Copier' repo then copying this SSH clone from github:
+git@github.com:sgabay/Sagi_Copier.git
+
+but need to enter THIS in the git bash:
+
+git clone git@github-personal:sgabay/Sagi_Copier.git  
+
+Notice this replaced the 'github.com' with 'github-personal'.
+Also, make sure to enter the Passphrase: "Password01"
+
+7. Once a repo is created then move a few files in my local folder then use:
+git status
+git add "filename"
+git commit -m "files"
+git push origin main
+
+Refresh page in github repo and see files are there. 
+
+Then, we need to rename the branch. Click "view all" branches and click on '...' and rename branch to 'Master', then git hub will show a few lines
+that I need to copy/paste one-by-one from git bash.
+
+After that I can move all my files into the local folder and upload to the Master branch and have a synced situation.
